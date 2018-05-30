@@ -25,7 +25,7 @@ def sense():
     import ubinascii
     from umqtt.simple import MQTTClient
     import time
-    pin = 21
+    pin = 6
     # connect to the network and set network varialbe (just in case)
     # boot.connect()
     # sta_if = network.WLAN(network.STA_IF)
