@@ -48,7 +48,7 @@ if __name__ == '__main__':
 
     try:
         print("collecting data...")
-        print("press P to print")
+        # print("press P to print")
         while True:
             # print("delete this line")
             input = readchar.readchar()

@@ -23,6 +23,7 @@ global temps
 
 #Function that prints and stores some stuff whenever data is received
 def tempsensor_callback(client, userdata, msg):
+    #print("temp callback triggered")
     #had to make these global so i could actually see changes them in main(for plotting)
     global i 
     global j
@@ -41,7 +42,7 @@ def tempsensor_callback(client, userdata, msg):
     temp = float(data_list[2])
     # temp_list['Sensor ' + device[-1]] =  temp
     temps[int(device[-1])].append(temp)
-    if (int(device[-1]) == 1):
+    if (int(device[-1]) == 0):
         x.append(i)
         i = i + 1
     j = j + 1
@@ -71,6 +72,7 @@ def setup_callback(client, userdata, msg):
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
     client.subscribe("sensor-data")
+    print("subscribed to 'sensor-data' ")
     client.subscribe("sensor-setup")
     client.message_callback_add("sensor-data", tempsensor_callback)
     client.message_callback_add("sensor-setup", setup_callback)
@@ -86,7 +88,7 @@ if __name__ == '__main__':
     client = mqtt.Client()
     client.on_message = on_message
     client.on_connect = on_connect
-    client.connect(host="eclipse.usc.edu", port=11000, keepalive=60)
+    client.connect(host="192.168.121.117", port=1883, keepalive=60)
     client.loop_start()
 
     try:
@@ -96,7 +98,7 @@ if __name__ == '__main__':
             
             # plt.scatter(x1,temp_list1,c='b')
             # plt.pause(.5)
-            # # plt.show(False)
+            # plt.show(False)
             # plt.draw()
             # print(len(x1))
             time.sleep(1)

@@ -25,7 +25,7 @@ def sense():
     import ubinascii
     from umqtt.simple import MQTTClient
     import time
-
+    pin = 6
     # connect to the network and set network varialbe (just in case)
     # boot.connect()
     # sta_if = network.WLAN(network.STA_IF)
@@ -35,8 +35,9 @@ def sense():
 
     print("setting up sensor")
     from temperature import TemperatureSensor
-    t = TemperatureSensor(21,'DS18B20-1')
+    t = TemperatureSensor(pin,'DS18B20-1')
     num_sens = len(t.ds.scan())
+
     print('Found ' + str(num_sens) + ' Sensors. reading....')
     for k in range(0,num_sens):
         print('Temp of sensor ' + str(k) + ': ')
@@ -46,7 +47,7 @@ def sense():
     # connect to devans laptop IP
     print("connecting.... ")
 
-    c =  MQTTClient("ESP32_dev", "eclipse.usc.edu", port = 11000)
+    c =  MQTTClient("ESP32_dev", "192.168.121.117", port=1883, keepalive=60)
     c.connect()
 
     print("Done it should be connected")

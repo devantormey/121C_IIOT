@@ -63,7 +63,7 @@ if __name__ == '__main__':
     client = mqtt.Client()
     client.on_message = on_message
     client.on_connect = on_connect
-    client.connect(host="eclipse.usc.edu", port=11000, keepalive=60)
+    client.connect(host="192.168.121.117", port=8883, keepalive=60)
     client.loop_start()
 
     try:
