@@ -18,6 +18,7 @@ global x
 x = []
 global num_sens
 global temps
+
 # global 
 
 

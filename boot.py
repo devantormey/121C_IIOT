@@ -18,6 +18,10 @@ def no_debug():
     # this can be run from the REPL as well
     esp.osdebug(None)
 
+# def sub_cb(topic, msg): #a request setup to publish some sensor setup
+#     print((topic, str(msg, "utf-8")))
+#     c.publish('sensor-setup', str(num_sens))
+
 def sense():
     import machine, onewire, ds18x20
     import network
@@ -35,6 +39,7 @@ def sense():
 
     print("setting up sensor")
     from temperature import TemperatureSensor
+    
     t = TemperatureSensor(pin,'DS18B20-1')
     num_sens = len(t.ds.scan())
 
@@ -51,17 +56,38 @@ def sense():
     c.connect()
 
     print("Done it should be connected")
+
     c.publish('sensor-setup', str(num_sens))
 
+    # c.set_callback(sub_cb)
+    # c.subscribe('setup-request')
 
     try:
+        
         while True:
             for k in range(0,num_sens):
+                print("addr_num = " + str(k))
                 print("Data To Published, Temperature is " + str(t.read_temp(addr_num = k)) + ' F' + ' From Sensor ' + str(k))
                 c.publish('sensor-data', str(t.name) + '-'+ str(k) + ' Temp: ' +  str(t.read_temp(addr_num = k)) + ' F' )
                 print("Done!")
                 time.sleep(1)
+                current_time = time.time()
+
+            
+            if num_sens < len(t.ds.scan()):
+                print("detected new sensor ")
+                num_sens = len(t.ds.scan())
+                addr_num = num_sens
+                print("Now seeing " + str(num_sens) + " sensors")   
+            c.publish('sensor-ping', str(num_sens))
+
     except KeyboardInterrupt:
         print('interrupted!')
 
     c.disconnect()
+
+# if __name__ == '__main__':
+
+#     connect()
+#     time.sleep(10)
+#     sense()

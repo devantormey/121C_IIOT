@@ -30,15 +30,21 @@ class TemperatureSensor:
         :return: Temperature
         :rtype: float
         """
-
+        # rescan for new sensors
+        # addrs = self.ds.scan()
+        # self.addr = addrs
         #First we gotta collect the addresses
 
         self.ds.convert_temp()
         time.sleep_ms(750)
-        temp = self.ds.read_temp(self.addr[addr_num])
-        if fahrenheit:
-            return self.c_to_f(temp)
-        return temp   
+        try:
+            temp = self.ds.read_temp(self.addr[addr_num])
+            if fahrenheit:
+                return self.c_to_f(temp)
+            return temp   
+        except:
+            addrs = self.ds.scan()
+            self.addr = addrs
     @staticmethod
     def c_to_f(c):
         """
