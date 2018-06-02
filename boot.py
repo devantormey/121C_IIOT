@@ -1,3 +1,6 @@
+import time
+
+
 def connect():
     import network
     sta_if = network.WLAN(network.STA_IF)
@@ -39,7 +42,7 @@ def sense():
 
     print("setting up sensor")
     from temperature import TemperatureSensor
-    
+
     t = TemperatureSensor(pin,'DS18B20-1')
     num_sens = len(t.ds.scan())
 
@@ -52,7 +55,7 @@ def sense():
     # connect to devans laptop IP
     print("connecting.... ")
 
-    c =  MQTTClient("ESP32_dev", "192.168.121.117", port=1883, keepalive=60)
+    c =  MQTTClient("ESP32_dev", "192.168.121.165", port=1883, keepalive=60)
     c.connect()
 
     print("Done it should be connected")
@@ -86,8 +89,20 @@ def sense():
 
     c.disconnect()
 
-# if __name__ == '__main__':
 
-#     connect()
-#     time.sleep(10)
-#     sense()
+ ## MAIN ####       
+connect()
+time.sleep(10)
+count = 0
+while count<10:
+    try:
+        sense()
+        count = 0
+    except:
+        print("couldnt find a sensor trying again...")
+        count = count + 1
+        time.sleep(4)
+
+
+
+
