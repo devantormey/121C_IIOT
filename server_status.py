@@ -2,7 +2,7 @@
 
 import paho.mqtt.client as mqtt #Paho MQTT is a lightweight mqtt library built for use with IOT Devices
 import time
-import readchar #USED FOR SOME DEBUGGING STUFF
+# import readchar #USED FOR SOME DEBUGGING STUFF
 import numpy as np 
 global columns 
 columns = []
