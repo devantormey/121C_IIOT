@@ -40,7 +40,7 @@ def tempsensor_callback(client, userdata, msg):
     data_list = []
     data_list = data.split()
     device = data_list[0]
-    
+
     if data_list[2] != 'None':
         temp = float(data_list[2])
     else:
@@ -72,7 +72,7 @@ def setup_callback(client, userdata, msg):
     data = str(msg.payload, "utf-8")
     # print(str(msg.payload, "utf-8"))
     num_sens = int(data)
-    print("Callback Triggered, Number of sensors =  "+ str(num_sens))
+    # print("Callback Triggered, Number of sensors =  "+ str(num_sens))
     temps = [[] for i in range(0, num_sens)]
 
     for k in range(0,num_sens):
@@ -121,7 +121,7 @@ if __name__ == '__main__':
     client = mqtt.Client()
     client.on_message = on_message
     client.on_connect = on_connect
-    client.connect(host="192.168.121.117", port=1883, keepalive=60)
+    client.connect(host="192.168.121.165", port=1883, keepalive=60)
     client.loop_start()
     # client.publish("setup-request",'Status Update Requested')
 
@@ -137,8 +137,18 @@ if __name__ == '__main__':
             print(columns)
             i = 0;
             plt.clf()
-            plt.bar(columns,temps)
-            plt.pause(.5)
+            for k in range(0,num_sens):
+                if temps[k] < 80 && temps[k] > 8:
+                    plt.bar(columns[k],temps[k],color='g')
+                    plt.pause(.5)
+
+                if temps[k] > 80:
+                    plt.bar(columns[k],temps[k],color='r')
+                    plt.pause(.5)
+                if temps[k] < 8:
+                    plt.bar(columns[k],temps[k],color='r')
+                    plt.pause(.5)
+
                 # plt.show(False)
             plt.draw()
     except KeyboardInterrupt:
