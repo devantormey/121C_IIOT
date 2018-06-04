@@ -136,7 +136,9 @@ if __name__ == '__main__':
             print(temps)
             print(columns)
             i = 0;
+
             plt.clf()
+            plt.ion()
             for k in range(0,num_sens):
                 if int(temps[k]) < 80 & int(temps[k]) > 8:
                     plt.bar(columns[k],temps[k],color='g')
