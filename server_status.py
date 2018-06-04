@@ -150,7 +150,10 @@ if __name__ == '__main__':
             #     if int(temps[k]) < 8:
             #         plt.bar(columns[k],temps[k],color='r')
             #         plt.pause(.5)
-            temp_arr = np.array(temps)
+            temp_arr=np.zeros(num_sens)
+            for k in range(0,num_sens):
+                temp_arr[k] = temps[k]
+
             for k in range(0,num_sens):
                 plt.bar(columns[k],temp_arr[k],color='g')
                 plt.pause(.5)
