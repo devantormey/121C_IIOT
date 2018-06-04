@@ -153,11 +153,12 @@ if __name__ == '__main__':
             temp_arr=np.zeros(num_sens)
             for k in range(0,num_sens):
                 temp_arr[k] = temps[k]
-
+            print(temp_arr)
+            
             for k in range(0,num_sens):
                 plt.bar(columns[k],temp_arr[k],color='g')
                 plt.pause(.5)
-            print(temp_arr)
+            
                 # plt.show(False)
             plt.draw()
     except KeyboardInterrupt:
