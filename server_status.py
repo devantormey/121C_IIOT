@@ -138,18 +138,20 @@ if __name__ == '__main__':
             i = 0;
 
             plt.clf()
-            plt.ion()
-            for k in range(0,num_sens):
-                if int(temps[k]) < 80 & int(temps[k]) > 8:
-                    plt.bar(columns[k],temps[k],color='g')
-                    plt.pause(.5)
+            # plt.ion()
+            # for k in range(0,num_sens):
+            #     if int(temps[k]) < 80 & int(temps[k]) > 8:
+            #         plt.bar(columns[k],temps[k],color='g')
+            #         plt.pause(.5)
 
-                if int(temps[k]) > 80:
-                    plt.bar(columns[k],temps[k],color='r')
-                    plt.pause(.5)
-                if int(temps[k]) < 8:
-                    plt.bar(columns[k],temps[k],color='r')
-                    plt.pause(.5)
+            #     if int(temps[k]) > 80:
+            #         plt.bar(columns[k],temps[k],color='r')
+            #         plt.pause(.5)
+            #     if int(temps[k]) < 8:
+            #         plt.bar(columns[k],temps[k],color='r')
+            #         plt.pause(.5)
+            for k in range(0,num_sens):
+                plt.bar(columns[k],temps[k],color='g')
 
                 # plt.show(False)
             plt.draw()
