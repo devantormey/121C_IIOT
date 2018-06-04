@@ -151,12 +151,15 @@ if __name__ == '__main__':
             #         plt.bar(columns[k],temps[k],color='r')
             #         plt.pause(.5)
             temp_arr=np.zeros(num_sens)
+            colums = np.zeros(num_sens)
+
             for k in range(0,num_sens):
                 temp_arr[k] = temps[k]
+                colums[k] = k
             print(temp_arr)
-            
+
             for k in range(0,num_sens):
-                plt.bar(columns[k],temp_arr[k],color='g')
+                plt.bar(colums[k],temp_arr[k],color='g')
                 plt.pause(.5)
             
                 # plt.show(False)
