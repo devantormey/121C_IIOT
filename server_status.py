@@ -138,7 +138,7 @@ if __name__ == '__main__':
             i = 0;
             plt.clf()
             for k in range(0,num_sens):
-                if temps[k] < 80 && temps[k] > 8:
+                if temps[k] < 80 & temps[k] > 8:
                     plt.bar(columns[k],temps[k],color='g')
                     plt.pause(.5)
 
