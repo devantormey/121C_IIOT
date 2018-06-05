@@ -26,13 +26,13 @@ def no_debug():
 #     c.publish('sensor-setup', str(num_sens))
 
 def sense():
-    import machine, onewire, ds18x20
+    import machine, onewire, MAX31850
     import network
     import boot
     import ubinascii
     from umqtt.simple import MQTTClient
     import time
-    pin = 13
+    pin = 21
     # connect to the network and set network varialbe (just in case)
     # boot.connect()
     # sta_if = network.WLAN(network.STA_IF)
@@ -41,10 +41,10 @@ def sense():
     #pull from the temperature.py script
 
     print("setting up sensor")
-    from temperature import TemperatureSensor
+    from temperatureTC import TemperatureSensor
 
-    t = TemperatureSensor(pin,'DS18B20-1')
-    num_sens = len(t.ds.scan())
+    t = TemperatureSensor(pin,'TC-1')
+    num_sens = len(t.mx.scan())
 
     print('Found ' + str(num_sens) + ' Sensors. reading....')
     for k in range(0,num_sens):
@@ -69,17 +69,18 @@ def sense():
         
         while True:
             for k in range(0,num_sens):
-                print("addr_num = " + str(k))
-                print("Data To Published, Temperature is " + str(t.read_temp(addr_num = k)) + ' F' + ' From Sensor ' + str(k))
-                c.publish('sensor-data', str(t.name) + '-'+ str(k) + ' Temp: ' +  str(t.read_temp(addr_num = k)) + ' F' )
+                # print("addr_num = " + str(k))
+                temp_data = 'MAX31850' + '-'+ str(k) + ' Temp: ' +  str(t.read_temp(addr_num = k))
+                print("Data To Published: " + temp_data )
+                c.publish('sensor-data',  temp_data)
                 print("Done!")
                 time.sleep(1)
                 current_time = time.time()
 
             
-            if num_sens < len(t.ds.scan()):
+            if num_sens < len(t.mx.scan()):
                 print("detected new sensor ")
-                num_sens = len(t.ds.scan())
+                num_sens = len(t.mx.scan())
                 addr_num = num_sens
                 print("Now seeing " + str(num_sens) + " sensors")   
             c.publish('sensor-ping', str(num_sens))
@@ -91,17 +92,17 @@ def sense():
 
 
  ## MAIN ####       
-connect()
-time.sleep(10)
-count = 0
-while count<10:
-    try:
-        sense()
-        count = 0
-    except:
-        print("couldnt find a sensor trying again...")
-        count = count + 1
-        time.sleep(4)
+# connect()
+# time.sleep(10)
+# count = 0
+# while count<10:
+#     try:
+#         sense()
+#         count = 0
+#     except:
+#         print("couldnt find a sensor trying again...")
+#         count = count + 1
+#         time.sleep(4)
 
 
 
