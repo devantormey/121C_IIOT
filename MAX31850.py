@@ -13,7 +13,7 @@ class MAX31850:
         self.buf = bytearray(9)
 
     def scan(self):
-        return [rom for rom in self.ow.scan() ]#if rom[0] == 0x10 or rom[0] == 0x28]
+        return [rom for rom in self.ow.scan() ]#if rom[0] == 0x10 or rom[0] == 0x28 or rom[0]==0x3b]
 
     def convert_temp(self):
         self.ow.reset(True)
