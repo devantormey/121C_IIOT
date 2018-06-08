@@ -36,14 +36,19 @@ if __name__ == '__main__':
     client.loop_start()
     # client.publish("setup-request",'Status Update Requested')
 
+    k = 1
+    temp = 24
 
     while True:
-    	# string = 'Hi'
-    	# client.publish("nodeRed_test", string)
-    	# print("published: " + string)
-    	
-    	temp_data = 'MAX31850' + '-'+ str(1) + ' Temp: ' +  str(72.5) 
-    	client.publish('nodeRed_test', temp_data )
-    	time.sleep(.5)
-    	print("published: " + temp_data)
-    	time.sleep(5)
+        payload = {
+        'Sensor': 'MAX31850' + str(k),
+        'Temp': str(temp)
+        }
+
+        temp_data = json.dumps(payload)
+        client.publish('nodeRed_test', temp_data )
+        time.sleep(.5)
+        print("published: " + temp_data)
+        time.sleep(5)
+
+
